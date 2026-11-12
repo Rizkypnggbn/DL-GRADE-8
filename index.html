@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>English Grade VIII Practice Hub</title>
+<style>
+:root{--bg:#f7f6f2;--card:#fff;--tx:#1f2430;--mut:#667085;--ac:#2f6fed;--ok:#1e8e4e;--bad:#c93a3a;--bd:#dcdad2;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15181f;--card:#1f242e;--tx:#eceef3;--mut:#9aa3b2;--ac:#6c9bff;--ok:#4cc784;--bad:#ff7a7a;--bd:#323947;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#15181f;--card:#1f242e;--tx:#eceef3;--mut:#9aa3b2;--ac:#6c9bff;--ok:#4cc784;--bad:#ff7a7a;--bd:#323947;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:720px;margin:0 auto;padding:20px 16px 40px}
+h1{font-size:1.4rem;margin:0 0 4px}
+.sub{color:var(--mut);margin:0 0 16px;font-size:.92rem}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+button{font:inherit;color:var(--tx);background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:8px 12px;cursor:pointer}
+button.on{background:var(--ac);border-color:var(--ac);color:#fff}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:18px;margin-top:8px}
+.q{font-size:1.08rem;font-weight:600;margin:0 0 12px}
+.opt{display:block;width:100%;text-align:left;margin-bottom:8px}
+.opt.ok{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 18%,var(--card))}
+.opt.no{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 18%,var(--card))}
+.fb{margin:10px 0;color:var(--mut);font-size:.95rem}
+.meta{display:flex;justify-content:space-between;color:var(--mut);font-size:.88rem;margin-bottom:8px}
+.bar{height:6px;background:var(--bd);border-radius:6px;overflow:hidden;margin-bottom:12px}
+.bar i{display:block;height:100%;background:var(--ac);width:0}
+.flip{min-height:150px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:1.15rem;cursor:pointer}
+.big{font-size:2rem;font-weight:700;text-align:center;margin:8px 0}
+.note{font-size:.82rem;color:var(--mut);margin-top:18px}
+</style>
+</head>
+<body>
+<main>
+<h1>English Grade VIII Practice Hub</h1>
+<p class="sub">Interactive quiz and flashcards for Chapters 5 to 9 of the Group 5 teaching materials.</p>
+<div class="row" id="chs"></div>
+<div class="row" id="modes"></div>
+<div id="view"></div>
+<p class="note">Check every answer key against the textbook before using this page in class.</p>
+</main>
+<script>
+const D=[
+{n:"5 Greeting Cards",q:[
+["Which expression is used for Eid al-Fitr?",["Happy Birthday!","Eid Mubarak!","Merry Christmas!","Good luck!"],1,"Eid Mubarak is the special greeting for Eid."],
+["____ on your graduation!",["Congratulations","Happy","Wishing","Thanks"],0,"We use Congratulations on for achievements, and Happy for celebrations and holidays."],
+["Which part is the closing of a card?",["Dear Mom,","Happy Mother’s Day!","Your daughter, Salsa","I love you."],2,"The closing contains the sender, such as Your daughter, Salsa."],
+["May all your dreams ____ true.",["come","comes","coming","came"],0,"A wish uses May + subject + base verb."],
+["Your friend says, “Happy Birthday!” You should say ...",["Thank you!","You’re welcome.","Sorry.","Goodbye."],0,"We thank the person who greets us."],
+["Which opening is suitable for a card to a teacher?",["Hi, buddy!","Dear Mr. Hadi,","Hey you!","Yo, Sir!"],1,"A card to a teacher uses a respectful opening."]],
+f:[["Congratulations on ...","Used for achievements, for example graduation."],["Happy ...","Used for celebrations and holidays, for example Happy New Year!"],["May + subject + base verb","Expresses a wish: May all your dreams come true."],["Parts of a greeting card","Opening, content, and closing."]]},
+{n:"6 Labels",q:[
+["“Best before: 15 December 2027” means ...",["Buy it after that date","It is best eaten before that date","It was made on that date","It costs that much"],1,"Best before shows the date until the product is at its best."],
+["____ out of reach of children.",["Keep","Keeps","Keeping","To keep"],0,"Instructions on labels use the base verb (imperative)."],
+["Which sentence is a prohibition?",["Shake well.","Add hot water.","Do not freeze.","Store in a cool place."],2,"Do not + verb tells us what we must not do."],
+["“Net weight: 80 g” tells us ...",["how much is in the packet","who made it","when it expires","where to buy it"],0,"Net weight is the amount of product inside."],
+["Which sentence is correct?",["Do not to freeze.","Do not freeze.","Not freeze.","Do not freezing."],1,"Do not is followed by the base verb, without to."],
+["Which word is a warning word?",["Caution","Ingredients","Net","Brand"],0,"Warning, Caution, and Danger introduce warnings."]],
+f:[["Structure of a label","Identity, information, instructions, and warnings."],["Do not / Don’t + verb","Negative imperative for prohibitions: Do not freeze."],["Net weight","The amount of product in the packet, for example 70 g."],["Keep out of reach of children","A common warning on product labels."]]},
+{n:"7 There is / There are",q:[
+["There ____ three books on the desk.",["is","are","am","be"],1,"Use are with plural nouns."],
+["There ____ a cat under the table.",["is","are","do","have"],0,"Use is with a singular noun."],
+["____ there any chairs in the room?",["Is","Are","Do","Does"],1,"Chairs is plural, so we ask Are there ...?"],
+["There ____ any water in the bottle.",["isn’t","aren’t","don’t","not"],0,"Water is uncountable, so we use isn’t."],
+["“Is there a library in your school?” Short answer:",["Yes, it is.","Yes, there is.","Yes, there are.","Yes, I am."],1,"Short answers repeat there is / there isn’t."],
+["Which sentence is correct?",["There is four children in the park.","There are four children in the park.","There have four children in the park.","Are four children in the park."],1,"Four children is plural, so use There are."]],
+f:[["There is","Used with singular and uncountable nouns: There is a book."],["There are","Used with plural nouns: There are four children."],["Questions","Is there ...? Are there ...?"],["Negatives","There isn’t / There aren’t ..."]]},
+{n:"8 Simple Present",q:[
+["My mother ____ breakfast every morning.",["cook","cooks","cooking","cooked"],1,"He, she, and it take a verb with -s or -es."],
+["____ Lina walk to school?",["Do","Does","Is","Are"],1,"Use Does with she, he, it, and a singular name."],
+["They ____ not play football on Sunday.",["do","does","is","are"],0,"Use do not with I, you, we, and they."],
+["The sun ____ in the east.",["rise","rises","rising","is rise"],1,"A general truth uses the simple present."],
+["She ____ a new bike.",["have","has","haves","having"],1,"The irregular form of have with she is has."],
+["Which sentence is correct?",["She don’t like milk.","She doesn’t like milk.","She doesn’t likes milk.","She not like milk."],1,"After doesn’t, the verb returns to the base form."]],
+f:[["he / she / it","Add -s or -es to the verb: She cooks."],["do / does","Used for questions and negatives: Does he work?"],["General truth","Use the simple present: The sun rises in the east."],["have → has","With he, she, or it: She has a bike."]]},
+{n:"9 Comparing",q:[
+["Mount Everest is ____ mountain in the world.",["high","higher","the highest","the most high"],2,"One-syllable adjectives take the + -est in the superlative."],
+["My bag is ____ than yours.",["heavy","heavier","heaviest","more heavy"],1,"Heavy changes to heavier in the comparative."],
+["This test is as ____ as the last one.",["difficult","more difficult","most difficult","difficulter"],0,"The equal degree uses as + adjective + as."],
+["good – better – ____",["the goodest","the best","the most good","the better"],1,"Good is irregular: good, better, the best."],
+["Dina is ____ student in our class.",["diligent","more diligent","the most diligent","the diligentest"],2,"Long adjectives use the most in the superlative."],
+["bad – worse – ____",["the baddest","the worst","the most bad","the worse"],1,"Bad is irregular: bad, worse, the worst."]],
+f:[["as + adjective + as","Equal degree: She is as tall as her sister."],["-er / more ... than","Comparative: taller than, more beautiful than."],["the -est / the most","Superlative: the tallest, the most beautiful."],["Irregular adjectives","good, better, the best; bad, worse, the worst."]]}
+];
+let c=0,mode="quiz",i=0,score=0,done=false,fi=0,flipped=false;
+const $=id=>document.getElementById(id);
+function tabs(){
+ $("chs").innerHTML=D.map((d,k)=>`<button class="${k===c?"on":""}" onclick="setC(${k})">${d.n}</button>`).join("");
+ $("modes").innerHTML=["quiz","cards"].map(m=>`<button class="${m===mode?"on":""}" onclick="setM('${m}')">${m==="quiz"?"Quiz":"Flashcards"}</button>`).join("");
+}
+function setC(k){c=k;i=0;score=0;done=false;fi=0;flipped=false;render()}
+function setM(m){mode=m;render()}
+function render(){tabs();mode==="quiz"?quiz():cards()}
+function quiz(){
+ const Q=D[c].q;
+ if(i>=Q.length){
+  $("view").innerHTML=`<div class="card"><div class="big">${score} / ${Q.length}</div><p style="text-align:center">${score===Q.length?"Perfect! Great work.":score>=4?"Well done! Review the missed items.":"Keep practising. Try the flashcards, then retry."}</p><div class="row" style="justify-content:center"><button onclick="setC(c)">Try again</button><button onclick="setM('cards')">Open flashcards</button></div></div>`;return}
+ const q=Q[i];
+ $("view").innerHTML=`<div class="meta"><span>Question ${i+1} of ${Q.length}</span><span>Score: ${score}</span></div><div class="bar"><i style="width:${i/Q.length*100}%"></i></div><div class="card"><p class="q">${q[0]}</p>${q[1].map((o,k)=>`<button class="opt" onclick="pick(${k})">${o}</button>`).join("")}<div class="fb" id="fb"></div></div>`;
+ done=false;
+}
+function pick(k){
+ if(done)return;done=true;
+ const q=D[c].q[i],ok=k===q[2];if(ok)score++;
+ document.querySelectorAll(".opt").forEach((b,j)=>{if(j===q[2])b.classList.add("ok");else if(j===k)b.classList.add("no")});
+ $("fb").innerHTML=`<b style="color:var(--${ok?"ok":"bad"})">${ok?"Correct!":"Not quite."}</b> ${q[3]}<div class="row" style="margin-top:10px"><button class="on" onclick="i++;quiz()">${i+1<D[c].q.length?"Next":"See score"}</button></div>`;
+}
+function cards(){
+ const F=D[c].f,f=F[fi];
+ $("view").innerHTML=`<div class="meta"><span>Card ${fi+1} of ${F.length}</span><span>Tap the card to flip</span></div><div class="card flip" onclick="flipped=!flipped;cards()">${flipped?f[1]:`<b>${f[0]}</b>`}</div><div class="row" style="margin-top:12px"><button onclick="fi=(fi+F.length-1)%F.length;flipped=false;cards()">Previous</button><button class="on" onclick="fi=(fi+1)%F.length;flipped=false;cards()">Next</button></div>`;
+}
+render();
+</script>
+</body>
+</html>
